@@ -1,0 +1,62 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ticketmonster-db-mysqldata
+  namespace: ticketmonster
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: gold
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ticketmonster-db
+  namespace: ticketmonster
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: ticketmonster-db
+    spec:
+      containers:
+      - image: mysql:5.5
+        name: ticketmonster-db
+        env:
+        - name: MYSQL_USER
+          value: ticket
+        - name: MYSQL_PASSWORD
+          value: monster
+        - name: MYSQL_DATABASE
+          value: ticketmonster
+        - name: MYSQL_ROOT_PASSWORD
+          value: Dynatrace123!
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: ticketmonster-db-mysqldata
+      restartPolicy: Always
+      volumes:
+      - name: ticketmonster-db-mysqldata
+        persistentVolumeClaim:
+          claimName: ticketmonster-db-mysqldata
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketmonster-db
+  namespace: ticketmonster
+spec:
+  ports:
+    - port: 3306
+  selector:
+    name: ticketmonster-db
+---

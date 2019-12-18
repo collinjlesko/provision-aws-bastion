@@ -1,0 +1,14 @@
+{
+    "jenkinsUser": "admin",
+    "jenkinsPassword": "dynatrace123qweASD!",
+    "docsOrg": "kristofre",
+    "docsRepo": "acl-docs",
+    "docsBranch": "release-2.5",
+    "dynatraceTenant": "DYNATRACE_TENANT_PLACEHOLDER",
+    "dynatraceApiToken": "DYNATRACE_API_TOKEN",
+    "dynatracePaasToken": "DYNATRACE_PAAS_TOKEN",
+    "githubUserName": "GITHUB_USER_NAME_PLACEHOLDER",
+    "githubPersonalAccessToken": "PERSONAL_ACCESS_TOKEN_PLACEHOLDER",
+    "githubUserEmail": "GITHUB_USER_EMAIL_PLACEHOLDER",
+    "githubOrg": "GITHUB_ORG_PLACEHOLDER"
+}

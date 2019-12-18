@@ -1,0 +1,64 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ticketmonster-monolith
+  namespace: ticketmonster
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ticketmonster-monolith
+        version: v1
+    spec:
+      containers:
+      - name: ticketmonster-monolith
+        image: dynatraceacm/ticketmonster-monolith:latest
+        env:
+        - name: MYSQL_SERVICE_HOST
+          value: ticketmonster-db
+        - name: MYSQL_SERVICE_PORT
+          value: "3306"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+          requests:
+            cpu: 400m
+            memory: 768Mi
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 15
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketmonster-monolith
+  labels:
+    app: ticketmonster-monolith
+  namespace: ticketmonster
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: ticketmonster-monolith
+  type: LoadBalancer
+---

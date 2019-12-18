@@ -1,0 +1,62 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ticketmonster-ui
+  namespace: ticketmonster
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ticketmonster-ui
+        version: v1
+    spec:
+      containers:
+      - name: ticketmonster-ui
+        image: dynatraceacm/ticketmonster-ui-v1:latest
+        env:
+        - name: BACKENDURL
+          value: ticketmonster-monolith
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+          requests:
+            cpu: 400m
+            memory: 768Mi
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 15
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketmonster-ui
+  labels:
+    app: ticketmonster-ui
+  namespace: ticketmonster
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: ticketmonster-ui
+  type: LoadBalancer
+---

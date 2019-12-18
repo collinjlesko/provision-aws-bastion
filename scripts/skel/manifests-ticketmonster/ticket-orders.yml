@@ -1,0 +1,58 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ticketmonster-orders-service
+  namespace: ticketmonster
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ticketmonster-orders-service
+        version: v1
+    spec:
+      containers:
+      - name: ticketmonster-orders-service
+        image: dynatraceacm/ticketmonster-orders-service:latest
+        resources:
+          limits:
+            cpu: 500m
+            memory: 2048Mi
+          requests:
+            cpu: 400m
+            memory: 2048Mi
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          timeoutSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          timeoutSeconds: 15
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ticketmonster-orders-service
+  labels:
+    app: ticketmonster-orders-service
+  namespace: ticketmonster
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: ticketmonster-orders-service
+---
