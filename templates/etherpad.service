@@ -1,0 +1,15 @@
+[Unit]
+Description=Etherpad service
+After=docker.service
+Requires=docker.service
+Documentation=https://github.com/ether/etherpad-lite
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run --rm --name %n \
+            -p 127.0.0.1:9001:9001 \
+            etherpad/etherpad:1.7.5
+ExecStop=/usr/bin/docker stop %n
+
+[Install]
+WantedBy=multi-user.target
