@@ -13,54 +13,55 @@
 #
 # $ ./createUsers.sh 5 ACMpart2018
 
+# if [ -z $1 ]
+# then
+#     echo "Please provide the number of users as first parameter"
+#     echo ""
+#     echo "$ ./createUsers.sh 5 ACMpart2018"
+#     exit 1
+# fi
+
 if [ -z $1 ]
 then
-    echo "Please provide the number of users as first parameter"
+    echo "Please provide a password as a second parameter"
     echo ""
-    echo "$ ./createUsers.sh 5 ACMpart2018"
+    echo "$ ./createUsers.sh ACMpart2018"
     exit 1
 fi
 
 if [ -z $2 ]
 then
-    echo "Please provide a password as a second parameter"
-    echo ""
-    echo "$ ./createUsers.sh 5 ACMpart2018"
-    exit 1
-fi
-
-if [ -z $3 ]
-then
     echo "Please provide the username base as a third parameter"
     echo ""
-    echo "$ ./createUsers.sh 5 ACMpart2018 acllab"
+    echo "$ ./createUsers.sh ACMpart2018 acllab"
     exit 1
 fi
 
-numberofusers=$1
-password=$2
-base=$3
+# numberofusers=$1
+ password=$1
+ base=$2
 
-i=1
-while [ $i -le $numberofusers ]
-do
-	echo "creating user $base$i"
-	sudo useradd -m -s /bin/bash $base$i
-    sudo chmod +x /home/$base$i/forkGitHubRepositories.sh 
-    sudo chmod +x /home/$base$i/defineCredentials.sh
-    sudo chmod +x /home/$base$i/installAnsible.sh
-    sudo chmod +x /home/$base$i/installDockerRegistry.sh
-    sudo chmod +x /home/$base$i/installJenkins.sh
-    sudo chmod +x /home/$base$i/applyK8sConfig.sh
-    sudo chmod +x /home/$base$i/installIstio.sh
-    sudo chmod +x /home/$base$i/add-to-cart.sh
-    sudo chmod +x /home/$base$i/installKeptnBridge.sh
-    sudo chmod +x /home/$base$i/installPrometheusVirtualService.sh
-    sudo chmod +x /home/$base$i/installDynatraceServiceForKeptn.sh
-    sudo chmod +x /home/$base$i/deployDynatraceOperator.sh
-    sudo chmod +x /home/$base$i/fixProduction.sh
-    sudo chmod +x -R /home/$base$i/keptn/
-    sudo usermod -aG docker $base$i
-	echo $base$i:$password | sudo chpasswd
-	i=$((i+1))
-done
+#i=1
+#while [ $i -le $numberofusers ]
+#do
+	echo "ubuntu user file update"
+#	sudo useradd -m -s /bin/bash $base$i
+    sudo cp -r /etc/skel/. /home/ubuntu/.
+    sudo chmod +x /home/$base/forkGitHubRepositories.sh 
+    sudo chmod +x /home/$base/defineCredentials.sh
+    sudo chmod +x /home/$base/installAnsible.sh
+    sudo chmod +x /home/$base/installDockerRegistry.sh
+    sudo chmod +x /home/$base/installJenkins.sh
+    sudo chmod +x /home/$base/applyK8sConfig.sh
+    sudo chmod +x /home/$base/installIstio.sh
+    sudo chmod +x /home/$base/add-to-cart.sh
+    sudo chmod +x /home/$base/installKeptnBridge.sh
+    sudo chmod +x /home/$base/installPrometheusVirtualService.sh
+    sudo chmod +x /home/$base/installDynatraceServiceForKeptn.sh
+    sudo chmod +x /home/$base/deployDynatraceOperator.sh
+    sudo chmod +x /home/$base/fixProduction.sh
+    sudo chmod +x -R /home/$base/keptn/
+    sudo usermod -aG docker $base
+	echo $base:$password | sudo chpasswd
+#	i=$((i+1))
+#done
