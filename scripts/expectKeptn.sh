@@ -7,7 +7,7 @@ set batip [lindex $argv 3];
 
 set timeout -1
 
-spawn /home/ubuntu/keptn/scripts/defineCredentials.sh
+spawn /home/ubuntu/repositories/keptn/scripts/defineCredentialsAWS.sh
 match_max 100000
 
 expect "Dynatrace Tenant ID (8-digits)"
