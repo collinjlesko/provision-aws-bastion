@@ -2,6 +2,7 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: gold
-provisioner: kubernetes.io/gce-pd
+provisioner: kubernetes.io/aws-ebs
 parameters:
-  type: pd-ssd
+  type: gp2
+  fsType: ext4
