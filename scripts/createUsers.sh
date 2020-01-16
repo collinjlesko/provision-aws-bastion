@@ -47,3 +47,4 @@ sudo chmod +x /home/$base/deployDynatraceOperator.sh
 sudo chmod +x /home/$base/fixProduction.sh
 sudo chmod +x -R /home/$base/keptn/
 sudo usermod -aG docker $base
+sudo sed -i 's/%sudo\s*ALL=(ALL:ALL)\s*ALL/%sudo   ALL=(ALL) NOPASSWD:ALL/g' /etc/sudoers

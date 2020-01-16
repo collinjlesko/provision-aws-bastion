@@ -27,7 +27,7 @@ spec:
      - sh
      - \"-c\"
      - \"chroot /host sed -i 's/\\\\\\\"max-concurrent-downloads\\\\\\\": 10/\\\\\\\"max-concurrent-downloads\\\\\\\": 10,\\\\n  \\\\\\\"insecure-registries\\\\\\\": [\\\\\\\"0.0.0.0\\\\/0\\\\\\\"]/g' /etc/docker/daemon.json\"
-     - chroot /host service docker restart
+     - \"chroot /host service docker restart\"
     stdin: true
     securityContext:
       privileged: true
