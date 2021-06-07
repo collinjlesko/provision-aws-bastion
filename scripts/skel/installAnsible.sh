@@ -53,13 +53,13 @@ echo -e "\nImporting license..."
 export LICENSE=$(curl -s -k -X POST https://$TOWER_URL/api/v2/config/ --user admin:dynatrace -H "Content-Type: application/json" \
 --data '{
     "company_name": "Dynatrace", 
-    "contact_email": "kristof.renders@dynatrace.com", 
-    "contact_name": "Kristof Renders", 
-    "hostname": "f2355d14fdac4cb2b58175a58cfb1765", 
+    "contact_email": "xxxx", 
+    "contact_name": "xxxxx", 
+    "hostname": "1234567890", 
     "eula_accepted": true,
     "instance_count": 10, 
     "license_date": 2135753488, 
-    "license_key": "7fe741ac7e3438d4a82e030f80e7defcee2130764aaa5426e58cefa13c9b8d78", 
+    "license_key": "1234567890", 
     "license_type": "basic", 
     "subscription_name": "Red Hat Ansible Tower, Self-Support (10 Managed Nodes)"
 }')
